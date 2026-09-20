@@ -162,8 +162,11 @@ cython_debug/
 
 #allure
 allure-results
+allure-report
 allure
 
 screen
 
 vader_characters.txt
+
+logs

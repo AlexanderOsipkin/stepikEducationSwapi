@@ -1,16 +1,19 @@
+import allure
 import requests
 
 from utils.logger import Logger
 
 
+@allure.epic("Methods for working with SWAPI")
 class Swapi:
     """Methods for working with SWAPI"""
 
     BASE_URL = "https://swapi.info/api"
 
     @staticmethod
+    @allure.step("Get character by ID: {character_id}")
     def get_character(character_id):
-        """Get character information"""
+        """Get character information by ID"""
 
         url = f"{Swapi.BASE_URL}/people/{character_id}"
 
@@ -22,10 +25,10 @@ class Swapi:
 
         # Check that the request was successful
         assert response.status_code == 200
-
         return response.json()
 
     @staticmethod
+    @allure.step("Get film information: {film_url}")
     def get_film(film_url):
         """Get film information"""
 
@@ -37,10 +40,10 @@ class Swapi:
 
         # Check that the request was successful
         assert response.status_code == 200
-
         return response.json()
 
     @staticmethod
+    @allure.step("Get character by URL: {character_url}")
     def get_character_by_url(character_url):
         """Get character information by URL"""
 
@@ -52,5 +55,4 @@ class Swapi:
 
         # Check that the request was successful
         assert response.status_code == 200
-
         return response.json()

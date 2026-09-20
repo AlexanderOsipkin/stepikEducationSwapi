@@ -14,7 +14,7 @@ class Logger:
     logs_directory = os.path.join(project_root, "logs")
 
     # Create a unique log file name using the current date and time
-    file_name = os.path.join(logs_directory,"log_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log")
+    file_name = os.path.join(logs_directory, "log_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log")
 
     @classmethod
     def write_log_to_file(cls, data: str):
