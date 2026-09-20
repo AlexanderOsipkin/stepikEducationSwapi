@@ -1,29 +1,25 @@
-import requests
+from utils.swapi import Swapi
 
 
-class TestDarthVader:
-    """Получаем персонажей, которые снимались вместе с Дартом Вейдером"""
+class TestCharacterFilms:
+    """Получаем персонажей, которые снимались вместе с выбранным персонажем"""
 
-    def test_get_characters_from_vader_films(self):
-        """Получаем персонажей из всех фильмов Дарта Вейдера и сохраняем их в файл"""
+    def test_get_characters_from_films(self):
+        """Получаем персонажей из всех фильмов выбранного персонажа и сохраняем их в файл"""
 
         # Основные данные персонажа
-        base_url = "https://swapi.info/api"
-        character_url = f"{base_url}/people/4"
-        file_name = "vader_characters.txt"
+        character_id = 4
         character_name = "Darth Vader"
+        file_name = "vader_characters.txt"
 
-        print(f"URL Персонажа - {character_name}: {character_url}")
+        swapi = Swapi()
 
-        # Получаем информацию о Дарте Вейдере
-        person_result = requests.get(character_url)
-        print(f"Статус код GET запроса: {person_result.status_code}")
+        print(f"ID персонажа - {character_id}")
+        print(f"Имя персонажа - {character_name}")
 
-        # Проверяем успешность запроса
-        assert person_result.status_code == 200
+        # Получаем информацию о персонаже
+        character = swapi.get_character(character_id)
         print(f"Данные {character_name} получены успешно")
-
-        character = person_result.json()
 
         # Получаем список фильмов в которых снимался персонаж
         film_urls = character.get("films")
@@ -36,13 +32,7 @@ class TestDarthVader:
         for film_url in film_urls:
             print(f"Получаем данные фильма: {film_url}")
 
-            film_result = requests.get(film_url)
-            print(f"Статус код GET фильма: {film_result.status_code}")
-
-            # Проверяем успешность запроса
-            assert film_result.status_code == 200
-
-            film = film_result.json()
+            film = swapi.get_film(film_url)
             film_title = film.get("title")
             print(f"Фильм: {film_title}")
 
@@ -52,12 +42,7 @@ class TestDarthVader:
 
             # Получаем имя каждого персонажа
             for character_url in character_urls:
-                character_result = requests.get(character_url)
-
-                # Проверяем успешность запроса
-                assert character_result.status_code == 200
-
-                character = character_result.json()
+                character = swapi.get_character_by_url(character_url)
                 character_name = character.get("name")
 
                 # Добавляем имя
