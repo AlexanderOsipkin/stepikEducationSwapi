@@ -1,56 +1,60 @@
-import requests
+import datetime
+import os
 
-from utils.logger import Logger
+from requests import Response
 
 
-class Swapi:
-    """Methods for working with SWAPI"""
+class Logger:
+    """Methods for logging API requests and responses"""
 
-    BASE_URL = "https://swapi.info/api"
+    # Get the project root directory
+    project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-    @staticmethod
-    def get_character(character_id):
-        """Get character information"""
+    # Set the directory for log files
+    logs_directory = os.path.join(project_root, "logs")
 
-        url = f"{Swapi.BASE_URL}/people/{character_id}"
+    # Create a unique log file name using the current date and time
+    file_name = os.path.join(logs_directory,"log_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log")
 
-        Logger.add_request(url, "GET")
+    @classmethod
+    def write_log_to_file(cls, data: str):
+        """Write log data to the log file"""
 
-        response = requests.get(url)
+        # Create the logs directory if it does not exist
+        os.makedirs(cls.logs_directory, exist_ok=True)
 
-        Logger.add_response(response)
+        # Open the log file and append new data
+        with open(cls.file_name, "a", encoding="utf-8") as logger_file:
+            logger_file.write(data)
 
-        # Check that the request was successful
-        assert response.status_code == 200
+    @classmethod
+    def add_request(cls, url: str, method: str):
+        """Add information about an API request to the log"""
 
-        return response.json()
+        # Get the current test name from pytest environment variables
+        test_name = os.environ.get("PYTEST_CURRENT_TEST")
 
-    @staticmethod
-    def get_film(film_url):
-        """Get film information"""
+        data_to_add = f"\n-----\n"
+        data_to_add += f"Test: {test_name}\n"
+        data_to_add += f"Time: {datetime.datetime.now()}\n"
+        data_to_add += f"Request method: {method}\n"
+        data_to_add += f"Request URL: {url}\n"
+        data_to_add += "\n"
 
-        Logger.add_request(film_url, "GET")
+        cls.write_log_to_file(data_to_add)
 
-        response = requests.get(film_url)
+    @classmethod
+    def add_response(cls, result: Response):
+        """Add information about an API response to the log"""
 
-        Logger.add_response(response)
+        # Convert response cookies and headers to dictionaries
+        cookies_as_dict = dict(result.cookies)
+        headers_as_dict = dict(result.headers)
 
-        # Check that the request was successful
-        assert response.status_code == 200
+        data_to_add = f"Response code: {result.status_code}\n"
+        data_to_add += f"Response text: {result.text}\n"
+        data_to_add += f"Response headers: {headers_as_dict}\n"
+        data_to_add += f"Response cookies: {cookies_as_dict}\n"
+        data_to_add += f"\n-----\n"
 
-        return response.json()
-
-    @staticmethod
-    def get_character_by_url(character_url):
-        """Get character information by URL"""
-
-        Logger.add_request(character_url, "GET")
-
-        response = requests.get(character_url)
-
-        Logger.add_response(response)
-
-        # Check that the request was successful
-        assert response.status_code == 200
-
-        return response.json()
+        cls.write_log_to_file(data_to_add)
