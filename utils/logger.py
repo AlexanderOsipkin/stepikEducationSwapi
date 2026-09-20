@@ -11,6 +11,8 @@ class Logger:
 
     @classmethod
     def write_log_to_file(cls, data: str):
+        os.makedirs("logs", exist_ok=True)
+
         with open(cls.file_name, "a", encoding="utf-8") as logger_file:
             logger_file.write(data)
 
