@@ -2,56 +2,54 @@ from utils.swapi import Swapi
 
 
 class TestCharacterFilms:
-    """Получаем персонажей, которые снимались вместе с выбранным персонажем"""
+    """Get characters who appeared in the same films as the selected character"""
 
     def test_get_characters_from_films(self):
-        """Получаем персонажей из всех фильмов выбранного персонажа и сохраняем их в файл"""
+        """Get characters from all films of the selected character and save them to a file"""
 
-        # Основные данные персонажа
+        # Character configuration
         character_id = 4
-        character_name = "Darth Vader"
+        target_character_name = "Darth Vader"
         file_name = "vader_characters.txt"
 
-        swapi = Swapi()
+        print(f"Character ID: {character_id}")
+        print(f"Character name: {target_character_name}")
 
-        print(f"ID персонажа - {character_id}")
-        print(f"Имя персонажа - {character_name}")
+        # Get character information
+        character = Swapi.get_character(character_id)
+        print(f"Data for {target_character_name} was retrieved successfully")
 
-        # Получаем информацию о персонаже
-        character = swapi.get_character(character_id)
-        print(f"Данные {character_name} получены успешно")
-
-        # Получаем список фильмов в которых снимался персонаж
+        # Get the list of films in which the character appeared
         film_urls = character.get("films")
-        print(f"Количество фильмов {character_name}: {len(film_urls)}")
+        print(f"Number of films for {target_character_name}: {len(film_urls)}")
 
-        # Используем set, чтобы имена персонажей не дублировались
+        # Use a set to avoid duplicate character names
         characters = set()
 
-        # Получаем персонажей каждого фильма
+        # Get characters from each film
         for film_url in film_urls:
-            print(f"Получаем данные фильма: {film_url}")
+            print(f"Getting film data: {film_url}")
 
-            film = swapi.get_film(film_url)
+            film = Swapi.get_film(film_url)
             film_title = film.get("title")
-            print(f"Фильм: {film_title}")
+            print(f"Film: {film_title}")
 
-            # Получаем ссылки на персонажей фильма
+            # Get character URLs from the film
             character_urls = film.get("characters")
-            print(f"Количество персонажей в фильме: {len(character_urls)}")
+            print(f"Number of characters in the film: {len(character_urls)}")
 
-            # Получаем имя каждого персонажа
+            # Get the name of each character
             for character_url in character_urls:
-                character = swapi.get_character_by_url(character_url)
+                character = Swapi.get_character_by_url(character_url)
                 character_name = character.get("name")
 
-                # Добавляем имя
+                # Add the name to the set
                 characters.add(character_name)
 
-        # Сохраняем имена персонажей в файл
+        # Save character names to a file
         with open(file_name, "w", encoding="utf-8") as file:
             for character_name in sorted(characters):
                 file.write(character_name + "\n")
 
-        print(f"Всего уникальных персонажей: {len(characters)}")
-        print(f"Все персонажи сохранены в файл {file_name}")
+        print(f"Total unique characters: {len(characters)}")
+        print(f"All characters were saved to {file_name}")

@@ -5,6 +5,8 @@ from requests import Response
 
 
 class Logger:
+    """Methods for logging API requests and responses"""
+
     file_name = ("logs/log_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".log")
 
     @classmethod
