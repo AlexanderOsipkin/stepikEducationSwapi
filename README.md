@@ -25,6 +25,7 @@ The project is based on practical tasks from the Stepik course and demonstrates 
 
 ## API
 > <a target="_blank" href="https://swapi.info/">SWAPI - a Star Wars API.</a>
+
 ![main page screenshot](pictures/swapi.jpg)
 
 Base URL:
