@@ -131,7 +131,7 @@ Contains Pytest configuration, including the configuration used for generating A
 
 ## Tech stack
 
-<img title="Python" src="pictures/python-original.svg" height="40" width="40"/><img title="Pytest" src="pictures/pytest-original.svg" height="40" width="40"/><img title="requests" src="pictures/requests.png" height="40" width="40"/><img title="Allure Report" src="pictures/Allure_Report.png" height="40" width="40"/><img title="GitHub" src="pictures/github-original.svg" height="40" width="40"/><img title="Pycharm" src="pictures/pycharm.png" height="40" width="40"/>
+<img title="Python" src="pictures/python-original.svg" height="40" width="40"/> <img title="Pytest" src="pictures/pytest-original.svg" height="40" width="40"/> <img title="requests" src="pictures/requests.png" height="40" width="40"/> <img title="Allure Report" src="pictures/Allure_Report.png" height="40" width="40"/> <img title="GitHub" src="pictures/github-original.svg" height="40" width="40"/> <img title="Pycharm" src="pictures/pycharm.png" height="40" width="40"/>
 
 ---
 
