@@ -26,6 +26,7 @@ The project is based on practical tasks from the Stepik course and demonstrates 
 ## API
 
 The project uses [SWAPI](https://swapi.info/) — a Star Wars API.
+![main page screenshot](pictures/swapi.jpg)
 
 Base URL:
 
@@ -191,6 +192,7 @@ The `-s` option allows `print()` output to be displayed in the console.
 ## Allure Report
 
 The project uses `allure-pytest` to generate test results and Allure Report to display them.
+![allure=](pictures/allure_api_exaample.jpg)
 
 Run tests and generate Allure results:
 
